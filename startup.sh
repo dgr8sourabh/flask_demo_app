@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Set environment variables
-export FLASK_APP=run.py
-export FLASK_ENV=production
+export PYTHONPATH=$PYTHONPATH:"/home/site/wwwroot/venv/lib/python3.9/site-packages"
+GUNICORN_CMD_ARGS="--timeout 600 --access-logfile '-' --error-logfile '-' --chdir=/home/site/wwwroot"
+
 
 # Run the Gunicorn server with 3 worker processes
-exec gunicorn -w 3 -b 0.0.0.0:8000 run:app
+gunicorn --bind=0.0.0.0 --timeout 600 --chdir==/home/site/wwwroot run:app
